@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<title>PA#1</title>
+<style>
+    body {
+        background-color: #EEEEEE;
+    }
+  .center {
+    text-align: center;
+    border: 3px solid green;
+  }
+  .sliderWrap {
+    text-align: center;
+    border: 3px solid green;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;  
+    justify-content: center; 
+}
+  .slider {
+    text-align: center;
+    /* border: 3px solid red; */
+    width: 50vh;
+    display: flex;
+  }
+</style>
+
+<script src="./Utils/trackball-rotator.js"></script>
+<script src="./Utils/m4.js"></script>
+<script src="./shader.gpu"></script>
+<script src="./Model.js"></script>
+<script src="./StereoCamera.js"></script>
+<script src="./Texture.js"></script>
+<script src="./main.js"></script>
+<link rel="style" href="./style.css">
+</head>
+<body onload="init()">
+<div class="center" width="100vh">
+<h2>A Surface of Conjugation of Two Coaxial Cylinders of Different Diameters with "Trackball" Mouse Rotation</h2>
+
+<p id="message">Drag your mouse on the shape to rotate it.<br></p>
+<div class="sliderWrap">
+<div class="slider">
+    <input type="range" id="stepRange" name="stepRange" min="15" max="60" value="15" step="15" oninput="updateRangeValue(this.value)"/>
+    <label for="stepRange">Granularity1 : <span id="rangeValue">15</span></label>
+    <script>
+        function updateRangeValue(value) {
+            document.getElementById("rangeValue").textContent = value;
+            step1 = +value
+            draw()
+        }
+    </script>
+</div>
+<div class="slider">
+    <input type="range" id="step2Range" name="step2Range" min="1" max="5" value="1" oninput="updateRange2Value(this.value)"/>
+    <label for="step2Range">Granularity2 : <span id="range2Value">1</span></label>
+    <script>
+        function updateRange2Value(value) {
+            document.getElementById("range2Value").textContent = value;
+            step2 = +value
+            draw()
+        }
+    </script>
+</div>
+<div class="slider">
+    <input type="range" id="esRange" name="esRange" min="0.1" max="20" value="0.5" step="0.1" oninput="updateesRange(this.value)"/>
+    <label for="esRange">Eye separation : <span id="esrangeValue">0.5</span></label>
+    <script>
+        function updateesRange(value) {
+            document.getElementById("esrangeValue").textContent = value;
+            stereoCam.eyeSeparation = +value
+        }
+    </script>
+</div>
+  <!-- // FOV -->
+<div class="slider">
+    <input type="range" id="fovRange" name="fovRange" min="10" max="120" value="45" oninput="updatefovRange(this.value)"/>
+    <label for="fovRange">FOV : <span id="fovrangeValue">19</span></label>
+    <script>
+        function updatefovRange(value) {
+            document.getElementById("fovrangeValue").textContent = value;
+            stereoCam.FOV = (+value) * Math.PI / 180
+        }
+    </script>
+</div>
+  <!-- // near clipping distance -->
+<div class="slider">
+    <input type="range" id="ncdRange" name="ncdRange" min="0.1" max="10.0" value="8.0" step="0.1" oninput="updatencdRange(this.value)"/>
+    <label for="ncdRange">Near Clipping Distance : <span id="ncdrangeValue">8.0</span></label>
+    <script>
+        function updatencdRange(value) {
+            document.getElementById("ncdrangeValue").textContent = value;
+            stereoCam.nearClippingDistance = +value
+        }
+    </script>
+</div>
+  <!-- // convergence distance -->
+<div class="slider">
+    <input type="range" id="cdRange" name="cdRange" min="5.0" max="20.0" value="10.0" step="0.1" oninput="updatecdRange(this.value)"/>
+    <label for="cdRange">Convergence Distance : <span id="cdrangeValue">8.7</span></label>
+    <script>
+        function updatecdRange(value) {
+            document.getElementById("cdrangeValue").textContent = value;
+            stereoCam.convergence = +value
+            //renderingParams.convergence = +value
+            //draw()
+        }
+    </script>
+</div>
+</div>
+<div>
+    <video id="webcam" style="display: none" autoplay playsinline></video>
+</div>
+
+<div id="canvas-holder" >
+   <canvas width="600" height="600" id="webglcanvas" style="background-color:red"></canvas>
+</div>
+</div>
+
+</body></html>
