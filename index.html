@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<title>PA#1</title>
+<style>
+    body {
+        background-color: #EEEEEE;
+    }
+  .center {
+    text-align: center;
+    border: 3px solid green;
+  }
+  .sliderWrap {
+    text-align: center;
+    border: 3px solid green;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;  
+    justify-content: center; 
+}
+  .slider {
+    text-align: center;
+    /* border: 3px solid red; */
+    width: 50vh;
+    display: flex;
+  }
+</style>
+
+<script src="./Utils/trackball-rotator.js"></script>
+<script src="./Utils/m4.js"></script>
+<script src="./shader.gpu"></script>
+<script src="./Model.js"></script>
+<script src="./StereoCamera.js"></script>
+<script src="./Texture.js"></script>
+<script src="./main.js"></script>
+<link rel="style" href="./style.css">
+</head>
+<body onload="init()">
+<div class="center" width="100vh">
+<h2>A Surface of Conjugation of Two Coaxial Cylinders of Different Diameters with "Trackball" Mouse Rotation</h2>
+
+<p id="message">Drag your mouse on the shape to rotate it.<br></p>
+<div>
+    <video id="webcam" style="display: none" autoplay playsinline></video>
+</div>
+
+<div id="canvas-holder" >
+   <canvas width="600" height="600" id="webglcanvas" style="background-color:red"></canvas>
+</div>
+</div>
+
+</body></html>
