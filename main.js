@@ -474,14 +474,9 @@ function LoadAudio()
     sound.source = ctx.createBufferSource();
     sound.mainVolume = ctx.createGain();
     sound.mainVolume.gain.setValueAtTime(0.05, ctx.currentTime); 
-    sound.biquadFilter = ctx.createBiquadFilter();
-
-    sound.biquadFilter.type = "bandpass";
-    sound.biquadFilter.frequency.value = 500;   
 
     sound.source.connect(sound.mainVolume);
-    sound.mainVolume.connect(sound.biquadFilter);
-    sound.biquadFilter.connect(ctx.destination);
+    sound.mainVolume.connect(ctx.destination);
 
     var request = new XMLHttpRequest();
 
@@ -504,3 +499,25 @@ function LoadAudio()
 
 
 }
+
+
+window.addEventListener("load", (event) => {
+  const checkbox = document.getElementById('filterCB');
+    checkbox.addEventListener('change', function () {
+        if (checkbox.checked) {
+            sound.biquadFilter = ctx.createBiquadFilter();
+            sound.biquadFilter.type = "bandpass";
+            sound.biquadFilter.frequency.value = 500;
+
+            sound.mainVolume.disconnect(); 
+            sound.mainVolume.connect(sound.biquadFilter);
+            sound.biquadFilter.connect(ctx.destination);
+        } else {
+            if (sound.biquadFilter) {
+                sound.mainVolume.disconnect(); 
+                sound.biquadFilter.disconnect(); 
+            }
+            sound.mainVolume.connect(ctx.destination);
+        }
+    });
+});
