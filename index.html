@@ -5,12 +5,14 @@
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <body style="margin : 0px; overflow: hidden;">
         <a-scene embedded arjs>
-        <a-marker preset="hiro">
+        <a-marker preset="custom">
             <!-- we use cors proxy to avoid cross-origin problems ATTENTION! you need to set up your server -->
             <a-entity
             position="0 0 0"
             scale="0.05 0.05 0.05"
             gltf-model="./cylinder.gltf"
+            type="pattern"
+            url="./pattern.patt"
             ></a-entity>
         </a-marker>
         <a-entity camera></a-entity>
